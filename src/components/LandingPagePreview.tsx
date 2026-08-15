@@ -9,9 +9,11 @@ import YGYPopup from './YGYPopup';
 
 interface LandingPagePreviewProps {
   input: GeneratorInput;
+  /** Hides the internal Copy Link / Download HTML toolbar (used for visitors on a shared link). */
+  hideToolbar?: boolean;
 }
 
-const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input }) => {
+const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideToolbar = false }) => {
   const [copy] = useState<GeneratedCopy>(() => generateCopy(input));
   const [ygyPopupNavigate, setYgyPopupNavigate] = useState<((url: string) => void) | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -55,26 +57,28 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input }) => {
 
   return (
     <>
-      {/* Share / Export toolbar */}
-      <div className="bg-white border-b border-gray-200 py-3 px-4">
-        <div className="container mx-auto flex flex-wrap items-center justify-center gap-3">
-          <button
-            onClick={handleCopyLink}
-            className="bg-health-blue text-white font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-sky transition-colors"
-          >
-            {linkCopied ? '✓ Link Copied!' : '🔗 Copy Shareable Link'}
-          </button>
-          <button
-            onClick={handleDownload}
-            className="bg-gray-100 text-gray-700 font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
-          >
-            ⬇ Download as HTML
-          </button>
-          <span className="text-xs font-montserrat text-gray-500 max-w-md text-center">
-            Deployed once on Netlify, this exact page stays live at the copied link — no re-deploy needed per TikTok.
-          </span>
+      {/* Share / Export toolbar - internal use only, hidden for visitors on a shared link */}
+      {!hideToolbar && (
+        <div className="bg-white border-b border-gray-200 py-3 px-4">
+          <div className="container mx-auto flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={handleCopyLink}
+              className="bg-health-blue text-white font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-sky transition-colors"
+            >
+              {linkCopied ? '✓ Link Copied!' : '🔗 Copy Shareable Link'}
+            </button>
+            <button
+              onClick={handleDownload}
+              className="bg-gray-100 text-gray-700 font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              ⬇ Download as HTML
+            </button>
+            <span className="text-xs font-montserrat text-gray-500 max-w-md text-center">
+              Deployed once on Netlify, this exact page stays live at the copied link — no re-deploy needed per TikTok.
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       <div ref={contentRef} className="bg-gray-50">
       {/* Hero Section */}

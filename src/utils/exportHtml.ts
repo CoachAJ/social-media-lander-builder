@@ -3,7 +3,19 @@
  * (using the Tailwind CDN build so it works with zero build step, hosted anywhere).
  */
 export function downloadStandaloneHtml(contentEl: HTMLElement, filename: string): void {
-  const contentHtml = contentEl.outerHTML;
+  // Clone the node so we can rewrite image URLs to absolute (pointing back at this
+  // deployment) without mutating the live preview. This way, images keep working
+  // even if the downloaded HTML file is hosted on a different domain or opened locally.
+  const clone = contentEl.cloneNode(true) as HTMLElement;
+  const origin = window.location.origin;
+  clone.querySelectorAll('img').forEach((img) => {
+    const src = img.getAttribute('src') || '';
+    if (src.startsWith('/')) {
+      img.setAttribute('src', `${origin}${src}`);
+    }
+  });
+
+  const contentHtml = clone.outerHTML;
 
   const doc = `<!DOCTYPE html>
 <html lang="en">

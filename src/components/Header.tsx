@@ -7,9 +7,15 @@ interface HeaderProps {
   variant?: 'tool' | 'landing';
   /** Shown as a call-to-action button when variant is 'landing' (e.g. "Create New Page"). */
   onReset?: () => void;
+  /**
+   * When true, hides all internal tool branding/navigation (wordmark, "New Landing
+   * Page" button) and shows only the cart icon. Used when a visitor opens a
+   * shared landing-page link directly, so they only see a clean storefront.
+   */
+  minimal?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ setCartOpen, variant = 'tool', onReset }) => {
+const Header: React.FC<HeaderProps> = ({ setCartOpen, variant = 'tool', onReset, minimal = false }) => {
   const { getCartCount } = useCart();
   const cartCount = getCartCount();
   const isLanding = variant === 'landing';
@@ -30,6 +36,16 @@ const Header: React.FC<HeaderProps> = ({ setCartOpen, variant = 'tool', onReset 
       )}
     </button>
   );
+
+  if (minimal) {
+    return (
+      <header className="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-end">
+          <CartButton />
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">

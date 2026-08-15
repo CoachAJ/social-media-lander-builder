@@ -21,6 +21,10 @@ import { decodeParamToInput, buildShareableUrl } from './utils/shareLink';
 function App() {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [generatedInput, setGeneratedInput] = React.useState<GeneratorInput | null>(null);
+  // True when the page was opened directly via a shared `?page=` link (i.e. an end
+  // customer, not the distributor previewing inside the generator tool). Used to hide
+  // internal tool branding/navigation and the copy-link/download-html toolbar.
+  const [isSharedView, setIsSharedView] = React.useState(false);
 
   // On first load, check if a shareable link (?page=...) was opened directly.
   React.useEffect(() => {
@@ -31,12 +35,14 @@ function App() {
       if (decoded) {
         setSponsorId(decoded.ygyId);
         setGeneratedInput(decoded);
+        setIsSharedView(true);
       }
     }
   }, []);
 
   const handleGenerate = (input: GeneratorInput) => {
     setGeneratedInput(input);
+    setIsSharedView(false);
     const shareUrl = buildShareableUrl(input);
     window.history.pushState({}, '', shareUrl);
     setTimeout(() => {
@@ -46,6 +52,7 @@ function App() {
 
   const handleReset = () => {
     setGeneratedInput(null);
+    setIsSharedView(false);
     window.history.pushState({}, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -57,11 +64,12 @@ function App() {
           setCartOpen={setCartOpen}
           variant={generatedInput ? 'landing' : 'tool'}
           onReset={generatedInput ? handleReset : undefined}
+          minimal={isSharedView}
         />
 
         <main role="main" className="flex-grow">
           {generatedInput ? (
-            <LandingPagePreview input={generatedInput} />
+            <LandingPagePreview input={generatedInput} hideToolbar={isSharedView} />
           ) : (
             <section className="py-16 md:py-20 bg-gradient-to-b from-gray-50 via-white to-white">
               <div className="container mx-auto px-4">
