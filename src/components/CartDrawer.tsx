@@ -11,6 +11,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }: CartDrawerPr
 
   if (!isOpen) return null;
 
+  const handleCheckout = () => {
+    checkout();
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Overlay */}
@@ -143,7 +148,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }: CartDrawerPr
                 </p>
                 <div className="mt-6">
                   <button
-                    onClick={checkout}
+                    onClick={handleCheckout}
                     className="flex justify-center w-full px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#0068B3] hover:bg-[#3CAADF] transition-colors"
                   >
                     Checkout

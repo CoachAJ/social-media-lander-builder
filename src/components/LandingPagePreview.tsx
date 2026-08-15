@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { GeneratorInput, GeneratedCopy } from '../types';
 import { generateCopy, getFdaDisclaimer, PRODUCT_DESCRIPTIONS } from '../utils/copyGenerator';
 import { PRODUCTS } from '../contexts/CartContext';
+import { buildShareableUrl } from '../utils/shareLink';
+import { downloadStandaloneHtml } from '../utils/exportHtml';
 import ProductCard from './ProductCard';
 import YGYPopup from './YGYPopup';
 
@@ -12,6 +14,8 @@ interface LandingPagePreviewProps {
 const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input }) => {
   const [copy] = useState<GeneratedCopy>(() => generateCopy(input));
   const [ygyPopupNavigate, setYgyPopupNavigate] = useState<((url: string) => void) | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleYgyNavigate = useCallback((fn: (url: string) => void) => {
     setYgyPopupNavigate(() => fn);
@@ -20,6 +24,24 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input }) => {
   const triggerYgyPopup = (url: string) => {
     if (ygyPopupNavigate) {
       ygyPopupNavigate(url);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    const url = buildShareableUrl(input);
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      window.prompt('Copy this link:', url);
+    }
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+  };
+
+  const handleDownload = () => {
+    if (contentRef.current) {
+      const filename = `landing-page-${input.ygyId || 'draft'}.html`;
+      downloadStandaloneHtml(contentRef.current, filename);
     }
   };
 
@@ -32,7 +54,29 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input }) => {
   const ygySiteUrl = `https://${input.ygyId}.youngevity.com`;
 
   return (
-    <div className="bg-gray-50">
+    <>
+      {/* Share / Export toolbar */}
+      <div className="bg-white border-b border-gray-200 py-3 px-4">
+        <div className="container mx-auto flex flex-wrap items-center justify-center gap-3">
+          <button
+            onClick={handleCopyLink}
+            className="bg-health-blue text-white font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-sky transition-colors"
+          >
+            {linkCopied ? '✓ Link Copied!' : '🔗 Copy Shareable Link'}
+          </button>
+          <button
+            onClick={handleDownload}
+            className="bg-gray-100 text-gray-700 font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+          >
+            ⬇ Download as HTML
+          </button>
+          <span className="text-xs font-montserrat text-gray-500 max-w-md text-center">
+            Deployed once on Netlify, this exact page stays live at the copied link — no re-deploy needed per TikTok.
+          </span>
+        </div>
+      </div>
+
+      <div ref={contentRef} className="bg-gray-50">
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-br from-health-blue to-blue-sky text-white">
         <div className="container mx-auto px-4 text-center max-w-4xl">
@@ -171,7 +215,8 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input }) => {
 
       {/* YGY Popup */}
       <YGYPopup ygyId={input.ygyId} onNavigate={handleYgyNavigate} />
-    </div>
+      </div>
+    </>
   );
 };
 

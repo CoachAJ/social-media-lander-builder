@@ -6,18 +6,39 @@ import CartDrawer from './components/CartDrawer';
 import GeneratorForm from './components/GeneratorForm';
 import LandingPagePreview from './components/LandingPagePreview';
 import { GeneratorInput } from './types';
+import { setSponsorId } from './utils/cartUtils';
+import { decodeParamToInput, buildShareableUrl } from './utils/shareLink';
 
 /**
  * Main App component - Landing Page Generator Tool
  * Users input a TikTok transcript + contact info + YGY ID,
  * and the tool generates a compliant, high-converting landing page.
+ *
+ * Generated pages are shareable via a `?page=` URL parameter, so a single
+ * Netlify deployment can serve unlimited unique landing pages without
+ * redeploying per TikTok/video.
  */
 function App() {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [generatedInput, setGeneratedInput] = React.useState<GeneratorInput | null>(null);
 
+  // On first load, check if a shareable link (?page=...) was opened directly.
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pageParam = params.get('page');
+    if (pageParam) {
+      const decoded = decodeParamToInput(pageParam);
+      if (decoded) {
+        setSponsorId(decoded.ygyId);
+        setGeneratedInput(decoded);
+      }
+    }
+  }, []);
+
   const handleGenerate = (input: GeneratorInput) => {
     setGeneratedInput(input);
+    const shareUrl = buildShareableUrl(input);
+    window.history.pushState({}, '', shareUrl);
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
@@ -25,6 +46,7 @@ function App() {
 
   const handleReset = () => {
     setGeneratedInput(null);
+    window.history.pushState({}, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -39,18 +61,7 @@ function App() {
 
         <main role="main" className="flex-grow">
           {generatedInput ? (
-            <div className="relative">
-              {/* Mobile-only reset button (desktop version lives in the header) */}
-              <div className="sm:hidden bg-white border-b border-gray-200 py-2 px-4">
-                <button
-                  onClick={handleReset}
-                  className="w-full bg-health-blue text-white font-proxima font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-sky transition-colors"
-                >
-                  ← New Landing Page
-                </button>
-              </div>
-              <LandingPagePreview input={generatedInput} />
-            </div>
+            <LandingPagePreview input={generatedInput} />
           ) : (
             <section className="py-16 md:py-20 bg-gradient-to-b from-gray-50 via-white to-white">
               <div className="container mx-auto px-4">
@@ -104,6 +115,7 @@ function App() {
                       <h3 className="font-proxima font-bold text-lg mb-2 text-gray-900">Get Landing Page</h3>
                       <p className="text-gray-600 font-montserrat text-sm leading-relaxed">
                         A complete landing page with products, cart integration, YGY links, and FDA disclaimer is generated.
+                        Copy the shareable link or download the standalone HTML — no redeploy needed.
                       </p>
                     </div>
                   </div>
