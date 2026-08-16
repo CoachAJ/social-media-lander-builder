@@ -20,6 +20,7 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
   // silently to the static version if the AI call fails or isn't configured.
   const [copy, setCopy] = useState<GeneratedCopy>(() => generateCopy(input));
   const [aiLoading, setAiLoading] = useState(true);
+  const [aiError, setAiError] = useState<string | null>(null);
   const [ygyPopupNavigate, setYgyPopupNavigate] = useState<((url: string) => void) | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -27,13 +28,18 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
   useEffect(() => {
     let cancelled = false;
     setAiLoading(true);
-    generateCopyWithAI(input).then((aiCopy) => {
+    setAiError(null);
+    generateCopyWithAI(input).then(({ copy: aiCopy, error }) => {
       if (!cancelled) {
         setCopy(aiCopy);
         setAiLoading(false);
+        if (error) setAiError(error);
       }
-    }).catch(() => {
-      if (!cancelled) setAiLoading(false);
+    }).catch((err) => {
+      if (!cancelled) {
+        setAiLoading(false);
+        setAiError(`AI call failed: ${String(err)}`);
+      }
     });
     return () => {
       cancelled = true;
@@ -83,6 +89,13 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
       {aiLoading && (
         <div className="bg-health-blue text-white py-2 px-4 text-center text-sm font-montserrat animate-pulse">
           AI is generating personalized copy from your transcript...
+        </div>
+      )}
+
+      {/* AI Error Banner */}
+      {aiError && !aiLoading && (
+        <div className="bg-yellow-500 text-white py-2 px-4 text-center text-sm font-montserrat">
+          {aiError} <span className="font-semibold">Check that GEMINI_API_KEY is set in Netlify.</span>
         </div>
       )}
 

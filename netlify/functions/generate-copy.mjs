@@ -194,7 +194,9 @@ export const handler = async (event) => {
       return { statusCode: 502, body: JSON.stringify({ error: 'Empty response from Gemini' }) };
     }
 
-    const parsed = JSON.parse(text);
+    // Strip optional markdown JSON fences before parsing
+    const cleaned = text.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+    const parsed = JSON.parse(cleaned);
 
     return {
       statusCode: 200,

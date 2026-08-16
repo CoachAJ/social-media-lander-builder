@@ -886,7 +886,7 @@ interface AiCopyResponse {
  * topic-templated copy from `generateCopy()` if the AI call fails or the
  * GEMINI_API_KEY isn't configured, so the tool always produces a working page.
  */
-export async function generateCopyWithAI(input: GeneratorInput): Promise<GeneratedCopy> {
+export async function generateCopyWithAI(input: GeneratorInput): Promise<{ copy: GeneratedCopy; error?: string }> {
   const fallback = generateCopy(input);
 
   try {
@@ -909,7 +909,8 @@ export async function generateCopyWithAI(input: GeneratorInput): Promise<Generat
     });
 
     if (!response.ok) {
-      return fallback;
+      const errData = await response.json().catch(() => ({}));
+      return { copy: fallback, error: `AI unavailable (${response.status}): ${errData?.error || response.statusText}. Using static copy.` };
     }
 
     const ai = (await response.json()) as Partial<AiCopyResponse>;
@@ -921,35 +922,37 @@ export async function generateCopyWithAI(input: GeneratorInput): Promise<Generat
       !Array.isArray(ai.topicSectionBody) ||
       !Array.isArray(ai.bodyStarvingBody)
     ) {
-      return fallback;
+      return { copy: fallback, error: 'AI response was incomplete or invalid. Using static copy.' };
     }
 
     // Merge AI-generated content with static fallback. The AI personalizes the
     // narrative and 17-step elements; fallback fills any gaps if AI omits a field.
     return {
-      ...fallback,
-      headline: ai.headline,
-      subHeadline: ai.subHeadline,
-      targetAudienceCallout: ai.targetAudienceCallout || fallback.targetAudienceCallout,
-      topicSectionTitle: ai.topicSectionTitle,
-      topicSectionBody: ai.topicSectionBody,
-      bodyStarvingBody: ai.bodyStarvingBody,
-      credentialsBody: Array.isArray(ai.credentialsBody) && ai.credentialsBody.length > 0
-        ? ai.credentialsBody
-        : fallback.credentialsBody,
-      socialProofBody: Array.isArray(ai.socialProofBody) && ai.socialProofBody.length > 0
-        ? ai.socialProofBody
-        : fallback.socialProofBody,
-      bonuses: Array.isArray(ai.bonuses) && ai.bonuses.length > 0
-        ? ai.bonuses
-        : fallback.bonuses,
-      guaranteeBody: ai.guaranteeBody || fallback.guaranteeBody,
-      ctaTitle: ai.ctaTitle || fallback.ctaTitle,
-      ctaBody: ai.ctaBody || fallback.ctaBody,
-      psText: ai.psText || fallback.psText,
+      copy: {
+        ...fallback,
+        headline: ai.headline,
+        subHeadline: ai.subHeadline,
+        targetAudienceCallout: ai.targetAudienceCallout || fallback.targetAudienceCallout,
+        topicSectionTitle: ai.topicSectionTitle,
+        topicSectionBody: ai.topicSectionBody,
+        bodyStarvingBody: ai.bodyStarvingBody,
+        credentialsBody: Array.isArray(ai.credentialsBody) && ai.credentialsBody.length > 0
+          ? ai.credentialsBody
+          : fallback.credentialsBody,
+        socialProofBody: Array.isArray(ai.socialProofBody) && ai.socialProofBody.length > 0
+          ? ai.socialProofBody
+          : fallback.socialProofBody,
+        bonuses: Array.isArray(ai.bonuses) && ai.bonuses.length > 0
+          ? ai.bonuses
+          : fallback.bonuses,
+        guaranteeBody: ai.guaranteeBody || fallback.guaranteeBody,
+        ctaTitle: ai.ctaTitle || fallback.ctaTitle,
+        ctaBody: ai.ctaBody || fallback.ctaBody,
+        psText: ai.psText || fallback.psText,
+      },
     };
-  } catch {
-    return fallback;
+  } catch (err) {
+    return { copy: fallback, error: `AI call failed: ${String(err)}. Using static copy.` };
   }
 }
 
