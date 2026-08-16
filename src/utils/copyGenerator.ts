@@ -582,6 +582,125 @@ const TOPIC_KEYWORDS: TopicKeyword[] = [
     ],
   },
   {
+    topic: 'ms',
+    keywords: [
+      'multiple sclerosis', 'ms', 'myelin', 'demyelination', 'ms diagnosis',
+      'lesion', 'brain lesion', 'neurological disorder', 'autoimmune disease',
+      'cic', 'circulating immune complex', 'nerve sheath damage',
+    ],
+    painPoint: 'multiple sclerosis and neurological demyelination',
+    headlineTemplate:
+      'MS Isn\'t Your Immune System Gone Rogue — It\'s Dirty Blood Depositing Toxins in Your Nerves',
+    subHeadlineTemplate:
+      'If you\'ve been diagnosed with MS and told your immune system is "attacking" your myelin sheaths for no reason, Pharmacist Ben Fuchs reveals the real root cause — and it starts in your gut.',
+    topicTitle: 'The Real Story Behind Multiple Sclerosis',
+    topicBody: [
+      'You\'ve been told your immune system has gone haywire — inexplicably attacking the myelin sheaths that protect your nerves. The diagnosis is MS, and the explanation is "autoimmune." But Pharmacist Ben Fuchs completely refutes this framing.',
+      'MS is fundamentally a digestive disease and a "dirty blood" issue. When leaky gut allows jagged bacterial components and food particles to flood the blood, the immune system surrounds them to form Circulating Immune Complexes (CICs). The body dumps these toxic complexes into the soft tissues — specifically the myelin sheaths of the nerves. Your immune system isn\'t attacking your myelin; it\'s attacking the toxins hiding in your myelin.',
+      'The mainstream approach offers immunosuppressive drugs that weaken the body\'s defenses without addressing the root cause. The real solution? Caloric restriction and fasting to give the immune system a rest, a strict grain-free ketogenic diet, and massive doses of Ultimate EFAs (up to 12-16 capsules daily) to rebuild the nerve sheaths and lower systemic inflammation.',
+    ],
+    starvingBody: [
+      'Your nervous system requires specific raw materials to maintain its protective myelin sheath — the fatty insulation that allows nerve signals to travel properly. Dr. Wallach identified 90 Essential Nutrients — and among these, essential fatty acids, trace minerals, and the B-vitamins are absolutely critical for myelin repair. Without them, the nerve sheaths cannot rebuild after toxic damage.',
+      'The modern diet is catastrophic for MS patients: mineral-depleted soil, processed foods that drive leaky gut, and inflammatory fats that damage the myelin. This is why nutritional saturation — including massive doses of Ultimate EFAs to insulate nerve sheaths, the Healthy Start Pack for foundational minerals, and Fucoid Z plus Collagen Peptides to patch the intestinal lining — is so critical for supporting neurological health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+    ],
+  },
+  {
+    topic: 'glaucoma',
+    keywords: [
+      'glaucoma', 'eye pressure', 'intraocular pressure', 'eye health',
+      'vision loss', 'optic nerve', 'macular degeneration', 'cataracts',
+      'eye pressure', 'ocular', 'retina', 'lutein', 'zeaxanthin',
+      'vision fx', 'ocutiv',
+    ],
+    painPoint: 'glaucoma, eye pressure, and vision concerns',
+    headlineTemplate:
+      'Glaucoma Isn\'t Just Eye Pressure — It\'s "Osteoporosis of the Eye"',
+    subHeadlineTemplate:
+      'If your eye pressure is rising and your vision is narrowing, the real root cause isn\'t your eyes alone — it\'s blood sugar damage and connective tissue starvation weakening the structure of your eyeball.',
+    topicTitle: 'The Real Story Behind Your Eye Health',
+    topicBody: [
+      'Your eye pressure is creeping up. Your peripheral vision is narrowing. You\'ve been told it\'s glaucoma and the only option is eye drops or surgery. But nobody has explained why the pressure is rising in the first place.',
+      'Pharmacist Ben Fuchs teaches that glaucoma is not an isolated optical defect — it\'s "osteoporosis of the eye" or "arthritis of the eye." The eyeball is a highly complex physical structure primarily constructed out of connective tissue and hyaluronic acid. When high blood sugar caramelizes (glycates) the eye\'s delicate microscopic blood vessels and structural matrix, the tissue weakens, "melts," and loses its ability to regulate fluid pressure properly. This is why eye pressure is intimately linked to diabetes and metabolic syndrome.',
+      'The mainstream approach offers pressure-lowering drops that treat the symptom. The real solution? Starve the sugar fire by eliminating refined carbs, rebuild the ocular scaffolding with connective tissue builders, and mega-dose Vitamin C — the biological rate-limiting cofactor for building new collagen in the eye.',
+    ],
+    starvingBody: [
+      'Your eyes are connective tissue structures that require specific raw materials to maintain their shape, pressure regulation, and vascular health. Dr. Wallach identified 90 Essential Nutrients — and among these, Vitamin C, collagen-building nutrients, hyaluronic acid, and the macular pigments (lutein, zeaxanthin) are absolutely critical for eye health. Without them, the eye\'s structural matrix weakens and pressure regulation fails.',
+      'The modern diet is catastrophic for eye health: high sugar that glycates the eye\'s delicate vessels, mineral-depleted food that starves the connective tissue, and a lack of the fat-soluble pigments (lutein, zeaxanthin) that protect the retina. This is why nutritional saturation — including the Healthy Bone and Joint Pack for connective tissue rebuilding, high-dose Vitamin C for collagen, and Vision FX for macular pigments — is so critical for supporting eye health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0,
+    ],
+  },
+  {
+    topic: 'fibroids_pcos',
+    keywords: [
+      'fibroid', 'fibroids', 'uterine fibroid', 'ovarian cyst', 'pcos',
+      'pmos', 'polycystic', 'estrogen dominance', 'estrogen excess',
+      'progesterone', 'hormonal imbalance', 'female hormones',
+      'endometriosis', 'heavy bleeding', 'irregular period',
+    ],
+    painPoint: 'uterine fibroids, ovarian cysts, and hormonal imbalance',
+    headlineTemplate:
+      'Your Fibroids and PCOS Aren\'t Genetic — They\'re Driven by Sugar and Toxic Estrogen',
+    subHeadlineTemplate:
+      'If you\'re dealing with fibroids, cysts, or PCOS, the real cause isn\'t bad luck — it\'s excess insulin acting as a growth hormone and a sluggish liver that can\'t clear toxic estrogen.',
+    topicTitle: 'The Real Story Behind Your Fibroids and Hormonal Issues',
+    topicBody: [
+      'You\'re dealing with heavy bleeding, painful cycles, fibroids, or cysts. You\'ve been told it\'s hormonal and the options are birth control, surgery, or "wait and see." But Pharmacist Ben Fuchs reveals a completely different root cause.',
+      'Uterine fibroids, ovarian cysts, and PCOS (now renamed Polycystic Metabolic Ovarian Syndrome) are growths driven by excess insulin and estrogen. Estrogen is the "sow hormone" designed to command rapid cell growth and division, while insulin acts as its powerful metabolic amplifier. When the liver, gallbladder, and gut bacteria (the estrobolome) cannot properly clear estrogen, it recirculates as highly toxic "catechol estrogen" — acting like fertilizer for reproductive growths.',
+      'The mainstream approach offers hormones or surgery without addressing the root cause. The real solution? Treat yourself like a diabetic to lower insulin and starve the growth, support the liver and gallbladder to flush toxic estrogen through bile, and apply topical progesterone to balance estrogen\'s growth signals.',
+    ],
+    starvingBody: [
+      'Your reproductive system requires specific raw materials to maintain healthy hormonal balance and tissue regulation. Dr. Wallach identified 90 Essential Nutrients — and among these, the trace minerals, essential fatty acids, and fat-soluble vitamins are absolutely critical for hormone production and estrogen clearance. Without them, the body cannot properly metabolize and eliminate excess estrogen.',
+      'The modern diet is a hormonal disaster: high sugar that drives insulin-driven growth, processed foods that overwhelm the liver\'s detoxification pathways, and mineral-depleted soil that leaves the body without the cofactors needed for hormone balance. This is why nutritional saturation — including the Healthy Blood Sugar Pack to lower insulin, Plant Derived Minerals for trace mineral cofactors, and Ultimate EFAs for anti-inflammatory hormonal support — is so critical for supporting reproductive health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BLOOD_SUGAR_PAK_2_0,
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+    ],
+  },
+  {
+    topic: 'pots',
+    keywords: [
+      'pots', 'postural orthostatic', 'orthostatic hypotension', 'dizziness',
+      'dizzy', 'lightheaded', 'wooziness', 'racing heart', 'heart racing',
+      'standing up dizzy', 'fainting', 'near fainting', 'presyncope',
+      'adrenal fatigue', 'adrenal exhaustion', 'dysautonomia',
+    ],
+    painPoint: 'dizziness, racing heart, and postural hypotension',
+    headlineTemplate:
+      'Your Dizziness and Racing Heart Aren\'t "Anxiety" — They\'re Adrenal Distress',
+    subHeadlineTemplate:
+      'If you feel dizzy when you stand up and your heart races for no reason, the real problem isn\'t your cardiovascular system — it\'s overtaxed adrenal glands and an overstressed nervous system starving for raw materials.',
+    topicTitle: 'The Real Story Behind Your Dizziness and Racing Heart',
+    topicBody: [
+      'You stand up and the room spins. Your heart pounds in your chest. You feel woozy, lightheaded, and sometimes nearly faint. You\'ve been told it\'s POTS, anxiety, or "just stress." But Pharmacist Ben Fuchs identifies a very specific root cause.',
+      'This is not a cardiovascular defect — it\'s a sign of adrenal gland duress and an overstressed sympathetic nervous system. The adrenal glands regulate blood pressure. When you\'re under chronic stress — both psychological and physical (from sludgy blood and fluctuating sugar levels) — the adrenals become overtaxed and lose their tight control over fluid dynamics. Standing up causes blood pressure to plummet, and the heart has to beat frantically to pump oxygen to the brain.',
+      'The mainstream approach offers beta-blockers and increased salt intake. The real solution? Rebuild the adrenal glands with D-Stress (containing B-vitamins, magnesium, and raw adrenal substance), replenish electrolytes with Plant-Derived Minerals and Beyond Tangy Tangerine, and reset the nervous system with slow, deep breathing and warm baths to shift from fight-or-flight into healing mode.',
+    ],
+    starvingBody: [
+      'Your adrenal glands and nervous system require specific raw materials to regulate blood pressure, stress response, and fluid dynamics. Dr. Wallach identified 90 Essential Nutrients — and among these, B-vitamins, magnesium, Vitamin C, and the full spectrum of trace minerals are absolutely critical for adrenal health. Without them, the adrenals cannot produce the hormones needed to regulate blood pressure and stress response.',
+      'The modern diet is catastrophic for adrenal health: chronic stress depletes B-vitamins and magnesium faster than any diet can replace them, mineral-depleted soil means electrolytes are severely deficient, and sugar causes the blood sugar swings that keep the adrenals in constant crisis mode. This is why nutritional saturation — including Plant Derived Minerals for electrolyte restoration, Beyond Tangy Tangerine for B-vitamins, and the Healthy Start Pack for foundational support — is so critical for supporting adrenal and nervous system health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0,
+    ],
+  },
+  {
     topic: 'general',
     keywords: [
       'health', 'wellness', 'nutrition', 'supplement', 'vitamin', 'mineral',
@@ -666,6 +785,10 @@ function analyzeTranscript(transcript: string): HealthTopic {
     kidney: 0,
     chronic_pain: 0,
     osteoporosis: 0,
+    ms: 0,
+    glaucoma: 0,
+    fibroids_pcos: 0,
+    pots: 0,
   };
 
   for (const topicKeyword of TOPIC_KEYWORDS) {

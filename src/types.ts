@@ -75,7 +75,11 @@ export type HealthTopic =
   | 'thyroid'
   | 'kidney'
   | 'chronic_pain'
-  | 'osteoporosis';
+  | 'osteoporosis'
+  | 'ms'
+  | 'glaucoma'
+  | 'fibroids_pcos'
+  | 'pots';
 
 export interface TopicKeyword {
   topic: HealthTopic;
