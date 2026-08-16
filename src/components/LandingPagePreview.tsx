@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { GeneratorInput, GeneratedCopy } from '../types';
-import { generateCopy, getFdaDisclaimer, PRODUCT_DESCRIPTIONS } from '../utils/copyGenerator';
+import { generateCopy, generateCopyWithAI, getFdaDisclaimer, PRODUCT_DESCRIPTIONS } from '../utils/copyGenerator';
 import { PRODUCTS } from '../contexts/CartContext';
 import { buildShareableUrl } from '../utils/shareLink';
 import { downloadStandaloneHtml } from '../utils/exportHtml';
@@ -102,9 +102,12 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
           <h1 className="font-proxima font-bold text-3xl md:text-5xl mb-6 leading-tight">
             {copy.headline}
           </h1>
-          <h2 className="text-xl md:text-2xl font-montserrat font-medium opacity-95 leading-relaxed">
+          <h2 className="text-xl md:text-2xl font-montserrat font-medium opacity-95 leading-relaxed mb-4">
             {copy.subHeadline}
           </h2>
+          <p className="text-base md:text-lg font-montserrat font-semibold text-tangy-yellow">
+            {copy.targetAudienceCallout}
+          </p>
         </div>
       </section>
 
@@ -140,8 +143,24 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
         </div>
       </section>
 
+      {/* Credentials / Authority Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h3 className="text-3xl font-bold font-proxima text-health-blue mb-6">
+            {copy.credentialsTitle}
+          </h3>
+          <div className="space-y-4">
+            {copy.credentialsBody.map((paragraph, i) => (
+              <p key={i} className="text-lg font-montserrat text-gray-700 leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Products Section */}
-      <section className="py-16 bg-white" id="products">
+      <section className="py-16 bg-gray-50" id="products">
         <div className="container mx-auto px-4 max-w-6xl">
           <h3 className="text-3xl font-bold font-proxima text-health-blue mb-4 text-center">
             The Foundation for Nutritional Saturation
@@ -166,13 +185,66 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
         </div>
       </section>
 
+      {/* Social Proof Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h3 className="text-3xl font-bold font-proxima text-health-blue mb-6 text-center">
+            {copy.socialProofTitle}
+          </h3>
+          <div className="space-y-4">
+            {copy.socialProofBody.map((paragraph, i) => (
+              <p key={i} className="text-lg font-montserrat text-gray-700 leading-relaxed text-center">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bonus Stack Section */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h3 className="text-3xl font-bold font-proxima text-glorious-sunset mb-10 text-center">
+            {copy.bonusesTitle}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {copy.bonuses.map((bonus, i) => (
+              <div key={i} className="bg-white rounded-xl shadow-soft p-6 border border-gray-100">
+                <div className="w-10 h-10 rounded-full bg-glorious-sunset/10 flex items-center justify-center mb-4">
+                  <span className="text-glorious-sunset font-bold">{i + 1}</span>
+                </div>
+                <h4 className="font-proxima font-bold text-lg text-health-blue mb-2">{bonus.title}</h4>
+                <p className="text-gray-600 font-montserrat text-sm leading-relaxed">{bonus.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Guarantee Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <h3 className="text-3xl font-bold font-proxima text-health-blue mb-4">
+            {copy.guaranteeTitle}
+          </h3>
+          <p className="text-lg font-montserrat text-gray-700 leading-relaxed mb-8">
+            {copy.guaranteeBody}
+          </p>
+          <div className="bg-health-blue/5 border border-health-blue/20 rounded-xl p-5">
+            <p className="font-montserrat text-health-blue font-semibold">
+              ⏳ {copy.scarcityText}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-br from-glorious-sunset to-tangy-yellow text-white">
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <h3 className="text-3xl md:text-4xl font-bold font-proxima mb-4">
             {copy.ctaTitle}
           </h3>
-          <p className="text-xl font-montserrat mb-8 opacity-95">
+          <p className="text-xl font-montserrat mb-8 opacity-95 whitespace-pre-line">
             {copy.ctaBody}
           </p>
 
@@ -220,6 +292,15 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
               </button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* P.S. Section — micro-landing-page recap */}
+      <section className="py-10 bg-gray-100">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <p className="text-base font-montserrat text-gray-800 leading-relaxed italic">
+            {copy.psText}
+          </p>
         </div>
       </section>
 

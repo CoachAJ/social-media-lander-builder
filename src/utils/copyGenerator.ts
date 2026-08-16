@@ -1,8 +1,74 @@
-import { GeneratorInput, GeneratedCopy, HealthTopic, TopicKeyword } from '../types';
+import { GeneratorInput, GeneratedCopy, HealthTopic, TopicKeyword, BonusItem } from '../types';
 import { PRODUCT_CODES } from './cartUtils';
 
 const FDA_DISCLAIMER =
   'Disclaimer: The statements contained on this page have not been evaluated by the Food and Drug Administration. The products and information recommended are not intended to diagnose, treat, cure, or prevent any disease. Always consult with your primary care physician before beginning any nutritional supplement program, especially if you are pregnant, nursing, or taking medications. The information provided is for educational purposes only.';
+
+// --- 17-Step Secret Selling System: shared, compliance-safe scaffolding ---
+// These sections are brand/company-level (not topic-specific), so they stay
+// consistent and legally defensible across every generated page. Per-topic
+// content (headline, agitate, root-cause) still comes from TOPIC_KEYWORDS below.
+
+const CREDENTIALS_TITLE = "Why Trust This Recommendation?";
+const CREDENTIALS_BODY = [
+  "Dr. Joel Wallach, BS, DVM, ND, spent over 40 years researching mineral deficiency in humans and animals, work that was featured in the landmark documentary \"Unlocking the Mystery of Life.\" His research into the 90 Essential Nutrients laid the scientific foundation for every Youngevity formula.",
+  "Pharmacist Ben Fuchs, a licensed pharmacist with decades of clinical experience, developed the \"Root vs. Fruit\" and \"Triangle of Disease\" frameworks used throughout this page to explain why cellular nutrition — not symptom management — is the starting point for lasting wellness.",
+  "Youngevity has been formulating doctor-designed nutritional products since 1997, manufactures to strict quality standards, and has shipped its 90 Essential Nutrients-based products to customers in dozens of countries worldwide.",
+];
+
+const SOCIAL_PROOF_TITLE = "Backed By Real Science, Not Just Opinion";
+const SOCIAL_PROOF_BODY = [
+  "Youngevity's core formulas are built directly on Dr. Wallach's published research into the 90 Essential Nutrients, and the company has been manufacturing and shipping these products for over 25 years.",
+  "This isn't a single-ingredient fad supplement — it's a comprehensive nutritional system used daily by tens of thousands of customers across the 90 For Life community, alongside guidance from independent distributors like your contact on this page.",
+];
+
+const BONUSES_TITLE = "When You Get Started Today, You Also Receive:";
+function buildBonuses(input: GeneratorInput): BonusItem[] {
+  const bonuses: BonusItem[] = [];
+  if (input.healthEvaluationLink) {
+    bonuses.push({
+      title: "Free Comprehensive Health Evaluation",
+      description: "A complimentary, no-obligation evaluation to help identify which nutritional gaps matter most for your specific situation.",
+    });
+  }
+  bonuses.push({
+    title: "1-on-1 Personal Support",
+    description: `Direct access to ${input.contactName || 'your independent distributor'} for questions, guidance, and protocol adjustments — not a call center.`,
+  });
+  bonuses.push({
+    title: "Getting Started Guide",
+    description: "A simple, step-by-step guide so you know exactly how and when to take each product for best results.",
+  });
+  return bonuses;
+}
+
+const GUARANTEE_TITLE = "Try It Risk-Free";
+const GUARANTEE_BODY =
+  "Youngevity products are backed by the company's standard satisfaction guarantee — if you're not satisfied, contact your distributor about return options within the applicable guarantee period. You're not locked into anything. (Distributor: confirm exact return window/policy with Youngevity before publishing.)";
+
+function buildScarcityText(input: GeneratorInput): string {
+  const name = input.contactName || 'your distributor';
+  return `${name} personally supports every customer 1-on-1 — that means limited availability. Reach out now while ${name} has room to give your health the attention it deserves.`;
+}
+
+function buildTargetAudienceCallout(painPoint: string): string {
+  return `This page is for you if you're dealing with ${painPoint} and you're ready to stop guessing and start giving your body what it actually needs.`;
+}
+
+function buildForensicCtaBody(input: GeneratorInput): string {
+  const steps: string[] = [];
+  if (input.healthEvaluationLink) {
+    steps.push('Click the button above to complete your free Health Evaluation');
+  }
+  steps.push(`Message ${input.contactName || 'your distributor'} directly using the contact info below`);
+  steps.push('Get your personalized protocol and start your 90 Essential Nutrients foundation today');
+  return steps.map((s, i) => `${i + 1}. ${s}`).join('\n');
+}
+
+function buildPsText(input: GeneratorInput, painPoint: string): string {
+  const name = input.contactName || 'your distributor';
+  return `P.S. — Nothing changes if nothing changes. Every day you wait is another day your body operates without the raw materials it needs, while ${painPoint} continues unaddressed. You've seen the research, you've seen the guarantee — the only remaining step is to reach out to ${name} and get started. The cost of doing nothing is simply staying exactly where you are today.`;
+}
 
 const TOPIC_KEYWORDS: TopicKeyword[] = [
   {
@@ -430,6 +496,7 @@ export function generateCopy(input: GeneratorInput): GeneratedCopy {
   return {
     headline,
     subHeadline,
+    targetAudienceCallout: buildTargetAudienceCallout(topicData.painPoint),
     topicSectionTitle: topicData.topicTitle,
     topicSectionBody: topicData.topicBody,
     bodyStarvingTitle: 'Your Body Isn\'t Broken, It\'s Starving',
@@ -437,9 +504,18 @@ export function generateCopy(input: GeneratorInput): GeneratedCopy {
     foundationIntro:
       'To support your body\'s natural ability to maintain optimal structure and function, you must saturate the cells with the exact nutrients they are begging for. Based on your specific needs, these are the foundational raw materials:',
     productDescriptions,
+    credentialsTitle: CREDENTIALS_TITLE,
+    credentialsBody: CREDENTIALS_BODY,
+    socialProofTitle: SOCIAL_PROOF_TITLE,
+    socialProofBody: SOCIAL_PROOF_BODY,
+    bonusesTitle: BONUSES_TITLE,
+    bonuses: buildBonuses(input),
+    guaranteeTitle: GUARANTEE_TITLE,
+    guaranteeBody: GUARANTEE_BODY,
+    scarcityText: buildScarcityText(input),
     ctaTitle: 'Take Control of Your Health Journey Today',
-    ctaBody:
-      'Stop guessing and start giving your body exactly what it needs to thrive.',
+    ctaBody: buildForensicCtaBody(input),
+    psText: buildPsText(input, topicData.painPoint),
     primaryTopic: topic,
     recommendedProducts: topicData.recommendedProductCodes,
   };
@@ -451,8 +527,6 @@ interface AiCopyResponse {
   topicSectionTitle: string;
   topicSectionBody: string[];
   bodyStarvingBody: string[];
-  ctaTitle: string;
-  ctaBody: string;
 }
 
 /**
@@ -490,22 +564,22 @@ export async function generateCopyWithAI(input: GeneratorInput): Promise<Generat
       !ai.subHeadline ||
       !ai.topicSectionTitle ||
       !Array.isArray(ai.topicSectionBody) ||
-      !Array.isArray(ai.bodyStarvingBody) ||
-      !ai.ctaTitle ||
-      !ai.ctaBody
+      !Array.isArray(ai.bodyStarvingBody)
     ) {
       return fallback;
     }
 
+    // Note: ctaBody/psText/guaranteeBody stay deterministic (forensic CTA, PS,
+    // guarantee) — these carry legal/compliance weight and shouldn't vary by AI
+    // output. Only the narrative sections are personalized per transcript.
     return {
       ...fallback,
       headline: ai.headline,
       subHeadline: ai.subHeadline,
+      targetAudienceCallout: fallback.targetAudienceCallout,
       topicSectionTitle: ai.topicSectionTitle,
       topicSectionBody: ai.topicSectionBody,
       bodyStarvingBody: ai.bodyStarvingBody,
-      ctaTitle: ai.ctaTitle,
-      ctaBody: ai.ctaBody,
     };
   } catch {
     return fallback;

@@ -56,13 +56,11 @@ ${transcript}
 
 Return ONLY valid JSON (no markdown fences) matching exactly this shape:
 {
-  "headline": "string, punchy pattern-interrupt headline, max ~15 words",
+  "headline": "string, punchy pattern-interrupt big bold benefit headline, max ~15 words",
   "subHeadline": "string, 1-2 sentences expanding the headline, empathetic",
-  "topicSectionTitle": "string, section title, e.g. 'The Real Story Behind Your ___'",
-  "topicSectionBody": ["2-3 paragraphs as separate strings, referencing transcript specifics"],
-  "bodyStarvingBody": ["1-2 paragraphs explaining the 90 essential nutrients / mineral depletion angle relevant to this topic"],
-  "ctaTitle": "string, short compelling call-to-action title",
-  "ctaBody": "string, 1 sentence urging action"
+  "topicSectionTitle": "string, section title acting as a curiosity-hook sub-heading, e.g. 'The Real Story Behind Your ___'",
+  "topicSectionBody": ["2-3 paragraphs as separate strings, agitating the specific problem using transcript details"],
+  "bodyStarvingBody": ["1-2 paragraphs explaining the 90 essential nutrients / mineral depletion angle relevant to this topic"]
 }`;
 }
 
