@@ -5,11 +5,13 @@
 // conditions with biochemical reasoning + protocols. The Gemini API key stays
 // server-side (GEMINI_API_KEY env var) and is never exposed to the browser.
 
-import { readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { readFileSync } from 'node:fs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Netlify sometimes bundles .mjs as CJS at runtime, so import.meta.url is
+// undefined. Use the CJS __dirname when it exists; otherwise fall back to ESM.
+const functionDir = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
 
 const GEMINI_MODEL = 'gemini-1.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
@@ -19,10 +21,10 @@ const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models
 let HEALTH_PROTOCOLS = '';
 let WALLACH_MANUAL = '';
 try {
-  HEALTH_PROTOCOLS = readFileSync(join(__dirname, 'Health_Protocols_and_Biochemical_Reasoning.md'), 'utf-8');
+  HEALTH_PROTOCOLS = readFileSync(join(functionDir, 'Health_Protocols_and_Biochemical_Reasoning.md'), 'utf-8');
 } catch { /* file may not be present in local dev */ }
 try {
-  WALLACH_MANUAL = readFileSync(join(__dirname, 'Dr_Wallachs_Master_Reference_Manual.md'), 'utf-8');
+  WALLACH_MANUAL = readFileSync(join(functionDir, 'Dr_Wallachs_Master_Reference_Manual.md'), 'utf-8');
 } catch { /* file may not be present in local dev */ }
 
 const KNOWLEDGE_BASE = `
