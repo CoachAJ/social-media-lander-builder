@@ -1,15 +1,34 @@
 // Netlify Function: calls Google Gemini (free tier) to generate personalized
 // landing-page copy from a specific transcript, grounded in Dr. Wallach's 90
-// Essential Nutrients framework and Pharmacist Ben Fuchs' cellular health
-// philosophy. The Gemini API key stays server-side (GEMINI_API_KEY env var)
-// and is never exposed to the browser.
+// Essential Nutrients framework, Pharmacist Ben Fuchs' cellular health
+// philosophy, and two exhaustive reference documents covering 20+ health
+// conditions with biochemical reasoning + protocols. The Gemini API key stays
+// server-side (GEMINI_API_KEY env var) and is never exposed to the browser.
+
+import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const GEMINI_MODEL = 'gemini-1.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
+// Load the two reference documents at cold-start so they're available for every
+// invocation without re-reading from disk on each request.
+let HEALTH_PROTOCOLS = '';
+let WALLACH_MANUAL = '';
+try {
+  HEALTH_PROTOCOLS = readFileSync(join(__dirname, 'Health_Protocols_and_Biochemical_Reasoning.md'), 'utf-8');
+} catch { /* file may not be present in local dev */ }
+try {
+  WALLACH_MANUAL = readFileSync(join(__dirname, 'Dr_Wallachs_Master_Reference_Manual.md'), 'utf-8');
+} catch { /* file may not be present in local dev */ }
+
 const KNOWLEDGE_BASE = `
 You are writing compliant, high-converting direct-response copy for a Youngevity
-"90 For Life" health supplement landing page. Ground every claim in this framework:
+"90 For Life" health supplement landing page. Ground every claim in the framework
+and reference documents below.
 
 DR. JOEL WALLACH'S 90 ESSENTIAL NUTRIENTS:
 The human body requires 90 essential nutrients daily that it cannot manufacture on
@@ -28,6 +47,26 @@ PHARMACIST BEN FUCHS' CONCEPTS:
   (especially brain and heart) to underperform.
 - "Nutritional saturation": flooding the body with all 90 essential nutrients so
   it can support its own natural repair and regulatory systems.
+
+=== REFERENCE DOCUMENT 1: HEALTH PROTOCOLS & BIOCHEMICAL REASONING ===
+${HEALTH_PROTOCOLS}
+
+=== REFERENCE DOCUMENT 2: DR. WALLACH'S MASTER REFERENCE MANUAL ===
+${WALLACH_MANUAL}
+
+=== END REFERENCE DOCUMENTS ===
+
+Use the reference documents to:
+1. Identify the specific health condition(s) discussed in the transcript and pull
+   the matching biochemical reasoning to explain the root cause accurately.
+2. Reference the specific protocol nutrients and products (e.g., Beyond Tangy
+   Tangerine, Ultimate EFAs, Plant-Derived Minerals, Fucoid Z, etc.) that
+   support the body's natural repair for that condition.
+3. Use the correct terminology and mechanisms from the documents (e.g., glycation,
+   leaky gut, myelin sheath, Circulating Immune Complexes, etc.).
+4. Match the transcript topic to the closest condition in the reference docs and
+   write copy that demonstrates deep, specific knowledge of that condition's
+   biochemical root cause — not generic health statements.
 
 TONE: Direct, empathetic, pattern-interrupt headlines. Speak to the specific pain
 points mentioned in the transcript. Avoid generic filler — reference concrete

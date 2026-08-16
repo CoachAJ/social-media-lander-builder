@@ -68,7 +68,14 @@ export type HealthTopic =
   | 'weight'
   | 'general'
   | 'skin_hair'
-  | 'mood_mental';
+  | 'mood_mental'
+  | 'neuropathy'
+  | 'tinnitus'
+  | 'prostate'
+  | 'thyroid'
+  | 'kidney'
+  | 'chronic_pain'
+  | 'osteoporosis';
 
 export interface TopicKeyword {
   topic: HealthTopic;

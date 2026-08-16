@@ -78,6 +78,9 @@ const TOPIC_KEYWORDS: TopicKeyword[] = [
       'ibs', 'acid reflux', 'heartburn', 'indigestion', 'microbiome', 'probiotic',
       'leaky gut', 'gas', 'cramping', 'nausea', 'food sensitivity', 'gluten',
       'absorption', 'nutrient absorption', 'enzymes', 'flora',
+      'colitis', 'crohn', 'inflammatory bowel', 'ulcerative',
+      'gastritis', 'h. pylori', 'helicobacter', 'stomach ulcer',
+      'malabsorption', 'villi', 'sibo', 'dysbiosis',
     ],
     painPoint: 'digestive distress and poor nutrient absorption',
     headlineTemplate:
@@ -138,6 +141,8 @@ const TOPIC_KEYWORDS: TopicKeyword[] = [
       'fog', 'brain fog', 'cognitive', 'circulation', 'blood pressure', 'cholesterol',
       'stroke', 'heart attack', 'neuro', 'neurological', 'dementia', 'alzheimer',
       'mental clarity', 'sharp', 'thinking', 'cardiac', 'artery', 'veins',
+      'hypertension', 'high blood pressure', 'afib', 'atrial fibrillation',
+      'vascular', 'circulation',
     ],
     painPoint: 'cognitive decline and cardiovascular concerns',
     headlineTemplate:
@@ -225,8 +230,9 @@ const TOPIC_KEYWORDS: TopicKeyword[] = [
     keywords: [
       'joint', 'arthritis', 'pain', 'ache', 'stiff', 'stiffness', 'inflammation',
       'knee', 'hip', 'back pain', 'neck pain', 'shoulder', 'mobility', 'flexibility',
-      'bone', 'bones', 'osteo', 'osteoporosis', 'cartilage', 'connective tissue',
+      'bone', 'bones', 'osteo', 'cartilage', 'connective tissue',
       'muscle pain', 'sore', 'soreness', 'cracking', 'popping',
+      'rheumatoid', 'ra', 'bone spur', 'heel spur', 'hernia',
     ],
     painPoint: 'joint pain, stiffness, and inflammation',
     headlineTemplate:
@@ -314,7 +320,8 @@ const TOPIC_KEYWORDS: TopicKeyword[] = [
       'skin', 'hair', 'nails', 'acne', 'wrinkle', 'wrinkles', 'aging skin',
       'dry skin', 'eczema', 'psoriasis', 'dermatitis', 'rash', 'collagen',
       'hair loss', 'thinning hair', 'bald', 'brittle nails', 'complexion',
-      'beauty', 'anti-aging', 'youthful',
+      'beauty', 'anti-aging', 'youthful', 'alopecia', 'moisturizer',
+      'lipedema', 'cellulite', 'exfoliate',
     ],
     painPoint: 'skin, hair, and nail concerns',
     headlineTemplate:
@@ -366,6 +373,212 @@ const TOPIC_KEYWORDS: TopicKeyword[] = [
       PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
       PRODUCT_CODES.PLANT_DERIVED_MINERALS,
       PRODUCT_CODES.BASIC_MIGHTY_90,
+    ],
+  },
+  {
+    topic: 'neuropathy',
+    keywords: [
+      'neuropathy', 'nerve pain', 'numbness', 'numb', 'tingling', 'pins and needles',
+      'peripheral', 'diabetic nerve', 'nerve damage', 'burning feet', 'burning hands',
+      'wooden', 'loss of sensation', 'foot pain', 'hand pain', 'extremities',
+      'glycation', 'myelin', 'nerve sheath', 'thiamine', 'b1',
+    ],
+    painPoint: 'nerve pain, numbness, and tingling in extremities',
+    headlineTemplate:
+      'Your Nerve Pain Isn\'t Permanent — It\'s a Cellular Cry for B-Vitamins and Minerals',
+    subHeadlineTemplate:
+      'If your hands and feet burn, tingle, or feel numb, the real problem isn\'t nerve damage — it\'s sugar-damaged capillaries starving your nerves of oxygen and nutrients.',
+    topicTitle: 'The Real Story Behind Your Nerve Pain',
+    topicBody: [
+      'Your fingers tingle. Your feet burn. You feel like you\'re walking on wooden blocks. And your doctor says it\'s "just neuropathy" — nerve damage that can\'t be fixed. But that\'s not the full story.',
+      'Pharmacist Ben Fuchs explains that peripheral neuropathy is a dead ringer symptom of metabolic syndrome. Elevated blood sugar is caustic — it literally caramelizes and burns the delicate capillaries and nerve sheaths at your body\'s furthest extremities, leaving nerves starved of oxygen and nutrients. The burning and numbness you feel is your nerves screaming for help.',
+      'The mainstream approach offers pain medications that mask the symptom while the underlying cellular starvation continues. The real solution? Aggressively restrict fast-burning carbohydrates to stop the glycation burn, and saturate with the specific nutrients your nerves need to repair — especially Vitamin B1 (Thiamine), the most critical nutrient for nerve conduction.',
+    ],
+    starvingBody: [
+      'Your nervous system is an electrical network that requires specific raw materials to maintain its protective myelin sheath and conduct signals properly. Dr. Wallach identified 90 Essential Nutrients — and among these, B-vitamins (especially Thiamine/B1), essential fatty acids, and magnesium are absolutely critical for nerve health. Without them, nerves cannot repair the damage caused by elevated blood sugar.',
+      'The tragedy is that these nutrients are severely depleted in modern diets. Over-farmed soil lacks the minerals, processed foods strip out the B-vitamins, and sugar actively depletes the very nutrients your nerves need. This is why nutritional saturation — flooding the body with all 90 essential nutrients, including high-dose B1 from Beyond Tangy Tangerine and Ultimate EFAs to rebuild the myelin sheath — is so critical for supporting nerve health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BLOOD_SUGAR_PAK_2_0,
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+    ],
+  },
+  {
+    topic: 'tinnitus',
+    keywords: [
+      'tinnitus', 'ringing ears', 'ringing in ears', 'ear ringing', 'ear noise',
+      'buzzing ears', 'humming ears', 'hearing noise', 'auditory', 'inner ear',
+      'ear pressure', 'head noise', 'whooshing',
+    ],
+    painPoint: 'ringing in the ears and auditory distress',
+    headlineTemplate:
+      'That Ringing in Your Ears Isn\'t "Just Aging" — It\'s Inflammation You Can Address',
+    subHeadlineTemplate:
+      'If you\'re living with constant ringing, buzzing, or humming in your ears, the real cause isn\'t your ears at all — it\'s micro-inflammation in your brain\'s auditory center, driven by dirty blood and nutrient starvation.',
+    topicTitle: 'The Real Story Behind Your Tinnitus',
+    topicBody: [
+      'The ringing never stops. It\'s there when you wake up, when you try to sleep, when you try to focus. You\'ve been told there\'s nothing that can be done — "just learn to live with it." But Pharmacist Ben Fuchs tells a very different story.',
+      'Tinnitus is not an ear disease — it\'s an inflammatory and vascular brain issue. The inner ear and auditory nerves are tiny, highly complex structures that are exceptionally vulnerable to micro-inflammation, nutrient starvation, and oxygen deprivation. This inflammation is frequently driven by systemic "dirty blood" originating from leaky gut, food allergies, or intracranial pressure.',
+      'The mainstream approach says it\'s irreversible. But when you address the root cause — repairing the gut barrier to stop the influx of inflammatory toxins, calming the sympathetic nervous system, and saturating with the specific nutrients your auditory nerves need — your body has a remarkable capacity to support its own natural repair systems.',
+    ],
+    starvingBody: [
+      'Your auditory system is one of the most nutrient-sensitive structures in your body. The tiny capillaries and nerves of the inner ear require a constant supply of magnesium, GABA, essential fatty acids, and specific trace minerals to function properly. Dr. Wallach\'s research showed that without the full spectrum of 90 essential nutrients, these delicate structures become inflamed and dysfunctional.',
+      'The modern diet is catastrophic for auditory health: mineral-depleted soil means your food lacks the magnesium and trace minerals your inner ear needs, while sugar and processed foods drive the systemic inflammation that causes the ringing. This is why nutritional saturation — including Ultimate EFAs to calm neuro-inflammation, Magnesium (Osteo Mag) to calm neuromuscular irritability, and Fucoid Z to repair the gut barrier — is so critical for supporting auditory health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0,
+    ],
+  },
+  {
+    topic: 'prostate',
+    keywords: [
+      'prostate', 'bph', 'enlarged prostate', 'prostate health', 'urinary flow',
+      'frequent urination', 'nighttime urination', 'bladder', 'urination',
+      'urinary', 'beta-sitosterol', 'psa', 'prostatitis',
+    ],
+    painPoint: 'prostate enlargement and urinary difficulties',
+    headlineTemplate:
+      'Your Prostate Problems Aren\'t Inevitable — They\'re Driven by Sugar and Bad Fats',
+    subHeadlineTemplate:
+      'If you\'re waking up multiple times a night to urinate, struggling with weak flow, or worried about your prostate, the real cause isn\'t aging — it\'s a metabolic and nutritional issue you can address.',
+    topicTitle: 'The Real Story Behind Your Prostate Concerns',
+    topicBody: [
+      'You wake up three times a night to urinate. The stream is weak. You feel like you can\'t fully empty your bladder. And your doctor says it\'s "just part of getting older" for men. But Pharmacist Ben Fuchs reveals a completely different root cause.',
+      'The prostate is a fatty gland whose cellular growth and inflammation are governed by the types of fats you consume and your blood sugar levels. Benign Prostatic Hypertrophy (BPH) is driven by hyperinsulinemia — high insulin from carbohydrate consumption acts as a powerful cell division hormone, causing the prostate to swell and pinch the urethra. Furthermore, processed, heated, or fried fats act like biological shrapnel, inflaming this fatty gland.',
+      'The mainstream approach offers medications or surgery. But the real solution starts with eliminating inflammatory fats and sugars, treating your body like a diabetic to drop insulin levels, and saturating with the specific nutrients your prostate needs — including Zinc, Selenium, and Beta-Sitosterol, which acts as an "almost miracle" to naturally support prostate health.',
+    ],
+    starvingBody: [
+      'Your prostate is a fatty gland that requires specific raw materials to maintain healthy size and function. Dr. Wallach\'s research identified 90 Essential Nutrients — and among these, Zinc, Selenium, essential fatty acids, and fat-soluble vitamins (A, D, and E) are absolutely critical for prostate health. Without them, the prostate cannot regulate its own cellular growth.',
+      'The modern diet is a prostate disaster: high in sugar that drives insulin-driven growth, loaded with inflammatory heated oils, and catastrophically deficient in the zinc, selenium, and essential fatty acids the prostate needs. This is why nutritional saturation — flooding the body with all 90 essential nutrients, including Ultimate EFAs for anti-inflammatory fats and Plant Derived Minerals for zinc and selenium — is so critical for supporting prostate health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BLOOD_SUGAR_PAK_2_0,
+    ],
+  },
+  {
+    topic: 'thyroid',
+    keywords: [
+      'thyroid', 'hashimoto', 'graves', 'hypothyroid', 'hyperthyroid',
+      'thyroiditis', 'iodine', 'selenium', 'thyroid function', 'underactive thyroid',
+      'overactive thyroid', 'goiter', 'thyroid antibody',
+      'autoimmune thyroid',
+    ],
+    painPoint: 'thyroid dysfunction and autoimmune thyroid concerns',
+    headlineTemplate:
+      'Your Thyroid Isn\'t Broken — It\'s Under Attack From Your Gut',
+    subHeadlineTemplate:
+      'If you\'ve been diagnosed with Hashimoto\'s or Graves\', told it\'s irreversible, and put on lifelong medication, the real root cause isn\'t your thyroid — it\'s a digestive and blood sugar issue.',
+    topicTitle: 'The Real Story Behind Your Thyroid Condition',
+    topicBody: [
+      'You\'re tired, cold, gaining weight, and your hair is thinning. Or maybe you\'re anxious, racing, and can\'t sleep. Either way, your thyroid is blamed, and you\'re told it\'s an autoimmune disease — your immune system is "confused" and attacking your thyroid. But Pharmacist Ben Fuchs completely refutes this framing.',
+      'Thyroid autoimmunity is fundamentally not a thyroid problem — it\'s a digestive and blood sugar issue. When leaky gut allows undigested food proteins and bacterial fragments into the blood, they cause systemic toxicity. This toxicity gets dumped into the thyroid tissue. Through "molecular mimicry," these foreign toxins look similar to thyroid cells. Your immune system isn\'t attacking your thyroid — it\'s attacking the toxins hiding in your thyroid.',
+      'The mainstream approach offers lifelong thyroid medication without addressing the root cause. But when you dismantle the toxicity by eliminating gut-inflaming foods, fasting to clear circulating immune complexes, and saturating with the specific nutrients your thyroid needs — especially Iodine, Selenium, and sulfur compounds — your body has a remarkable capacity to support its own natural regulatory systems.',
+    ],
+    starvingBody: [
+      'Your thyroid gland requires specific raw materials to produce and regulate hormones. Dr. Wallach\'s research identified 90 Essential Nutrients — and among these, Iodine, Selenium, and trace minerals are absolutely critical for thyroid function. Without them, the thyroid cannot produce adequate hormone or regulate its own immune response.',
+      'The modern diet is catastrophic for thyroid health: mineral-depleted soil means iodine and selenium are severely deficient, processed foods inflame the gut and drive the leaky gut that triggers autoimmunity, and cruciferous vegetables (when raw) inhibit iodine uptake. This is why nutritional saturation — including Ultimate Selenium for immune modulation, Plant Derived Minerals for iodine and trace minerals, and Fucoid Z to repair the intestinal barrier — is so critical for supporting thyroid health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BODY_DIGESTION_PAK_2_0,
+    ],
+  },
+  {
+    topic: 'kidney',
+    keywords: [
+      'kidney', 'kidneys', 'kidney stones', 'kidney disease', 'renal',
+      'nephron', 'protein in urine', 'creatinine', 'gfr', 'dialysis',
+      'urinary tract', 'bladder infection', 'uti', 'crystals',
+    ],
+    painPoint: 'kidney health concerns and stone formation',
+    headlineTemplate:
+      'Your Kidneys Aren\'t Failing — They\'re Being Burned by Sugar and Starved of Minerals',
+    subHeadlineTemplate:
+      'If you\'re worried about kidney function or prone to kidney stones, the real cause isn\'t genetics — it\'s blood sugar damage and mineral deficiency in your kidney\'s delicate filtration system.',
+    topicTitle: 'The Real Story Behind Your Kidney Concerns',
+    topicBody: [
+      'Your lab numbers are creeping in the wrong direction. You\'ve been told to "watch your protein" and "drink more water." Or maybe you\'ve passed a kidney stone and never want to experience that pain again. But nobody has explained why your kidneys are struggling in the first place.',
+      'Pharmacist Ben Fuchs teaches that kidney disease should always be regarded as a blood sugar and blood toxicity issue. Your kidneys are biological filters made of over 100 miles of microscopically thin capillary vessels. High blood sugar glycates — literally caramelizes and burns — these delicate filters, causing protein to leak into the urine. When blood is thick and super-saturated with metabolic acids, minerals can\'t stay dissolved and precipitate out as crystals, forming kidney stones.',
+      'The mainstream approach offers blood pressure medications and dietary restrictions that don\'t address the root cause. The real solution? Treat your body like a strict diabetic to protect the remaining healthy kidney capillaries, and saturate with the specific nutrients that support kidney health — including Plant-Derived Minerals for nutritional chelation, Vitamin C, Selenium, and MSM to safely clear toxins from the blood.',
+    ],
+    starvingBody: [
+      'Your kidneys are extraordinary filtration organs that require specific raw materials to maintain their delicate capillary network. Dr. Wallach\'s research identified 90 Essential Nutrients — and among these, Vitamin C, Selenium, MSM (sulfur), and the full spectrum of plant-derived minerals are absolutely critical for kidney health. Without them, the kidneys cannot effectively filter toxins or maintain mineral solubility in the blood.',
+      'The modern diet is a kidney disaster: high sugar that burns the filtration capillaries, mineral-depleted food that leaves the blood super-saturated with unbuffered acids, and processed foods that thicken the blood and increase the kidneys\' workload. This is why nutritional saturation — including Plant Derived Minerals for chelation, Ultimate Selenium, and Fucoid Z to fluidize the blood — is so critical for supporting kidney health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BLOOD_SUGAR_PAK_2_0,
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+    ],
+  },
+  {
+    topic: 'chronic_pain',
+    keywords: [
+      'chronic pain', 'fibromyalgia', 'muscle pain', 'muscle soreness',
+      'body pain', 'widespread pain', 'pain management', 'inflammation pain',
+      'sore muscles', 'stiff muscles', 'pain relief', 'living with pain',
+      'fibro', 'tender points', 'trigger points', 'white muscle disease',
+    ],
+    painPoint: 'chronic pain and muscle soreness',
+    headlineTemplate:
+      'Your Chronic Pain Isn\'t "All in Your Head" — It\'s in Your Cells',
+    subHeadlineTemplate:
+      'If you\'re living with widespread pain, fibromyalgia, or constant muscle soreness, the real solution isn\'t another pain pill — it\'s giving your body the raw materials it needs to quench the inflammatory fire at the cellular level.',
+    topicTitle: 'The Real Story Behind Your Chronic Pain',
+    topicBody: [
+      'You hurt everywhere. Some days it\'s your back, some days it\'s your legs, some days it\'s everything. You\'ve been told it\'s fibromyalgia, or "just inflammation," or worse — that it\'s all in your head. But Pharmacist Ben Fuchs and Dr. Wallach tell a very different story.',
+      'In the livestock industry, what we call "fibromyalgia" in humans is called "White Muscle Disease" — and it\'s a Selenium deficiency that causes muscle tissue to turn into scar tissue. Pain itself is your body\'s alarm signal: when cells are placed under severe duress from starvation, oxygen deprivation, or toxicity, they literally explode, spewing corrosive internal acids into surrounding tissues. The immune system builds a microscopic "beaver\'s dam" of fluid and inflammatory fibers to wall off the damage — and that localized swelling is what causes the excruciating pain.',
+      'The mainstream approach offers pain relievers and anti-inflammatories that mask the symptom while the underlying cellular starvation continues. The real solution? High doses of Ultimate EFAs (Nature\'s Aspirin) to quench the inflammatory fire, Ultimate Enzymes on an empty stomach to digest the inflammatory debris, and mega-dose Selenium to halt the oxidative breakdown causing muscle tissue to scar.',
+    ],
+    starvingBody: [
+      'Your muscles and tissues require specific raw materials to maintain healthy function and repair daily wear and tear. Dr. Wallach\'s research identified 90 Essential Nutrients — and among these, Selenium, Vitamin E, essential fatty acids, and Magnesium are absolutely critical for muscle health. Without them, muscle tissue degrades, scars, and becomes chronically painful.',
+      'The modern diet is catastrophic for muscle health: mineral-depleted soil means selenium and magnesium are severely deficient, processed foods drive systemic inflammation, and sugar depletes the very nutrients your muscles need to repair. This is why nutritional saturation — including Ultimate EFAs as Nature\'s Aspirin, Magnesium (Osteo Mag) for muscle relaxation, and Plant Derived Minerals for the full spectrum of trace minerals — is so critical for supporting muscle health and natural pain relief.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0,
+    ],
+  },
+  {
+    topic: 'osteoporosis',
+    keywords: [
+      'osteoporosis', 'bone density', 'bone loss', 'bone demineralization',
+      'bone fracture', 'fragile bones', 'bone health', 'dexa', 'dexa scan',
+      't-score', 'calcium deficiency', 'bone thinning', 'osteopenia',
+    ],
+    painPoint: 'bone density loss and osteoporosis',
+    headlineTemplate:
+      'Osteoporosis Isn\'t a Calcium Deficiency — It\'s a Mineral Starvation Crisis',
+    subHeadlineTemplate:
+      'If you\'ve been told your bones are thinning and calcium is the answer, you\'re only getting a fraction of the story. The real root cause is acidic, mineral-depleted blood — and the solution is nutritional saturation.',
+    topicTitle: 'The Real Story Behind Your Bone Density Loss',
+    topicBody: [
+      'Your DEXA scan shows declining bone density. You\'ve been told to take more calcium and do weight-bearing exercise. But the fractures keep happening, or the numbers keep dropping. Here\'s what nobody\'s telling you: osteoporosis is fundamentally not a lack of calcium — it\'s a sign of toxic, acidic blood.',
+      'Pharmacist Ben Fuchs explains that bone is a living connective tissue matrix hardened by minerals. Under conditions of chronic stress, nutritional deficiencies, low oxygen, and high sugar diets, acidic waste rapidly builds up in the blood. Because blood pH must stay strictly balanced, the body engages an emergency survival response: it leaches calcium (an alkaline mineral) out of your bones to buffer and neutralize the acid. Your bones are literally being dissolved to neutralize your acidic blood.',
+      'The mainstream approach offers calcium supplements and bone-building drugs. But without addressing the acidic blood, the leaching continues. The real solution? Stop consuming acid-producing refined sugars and processed foods, rebuild the bone matrix with collagen-building nutrients, and saturate with the full spectrum of 60 minerals — not just calcium — that your bones need.',
+    ],
+    starvingBody: [
+      'Your bones are living, dynamic tissues that constantly break down and rebuild. This process requires far more than just calcium — it requires the full spectrum of 60 minerals that Dr. Wallach identified as part of the 90 Essential Nutrients, plus 16 vitamins, 12 amino acids, and 3 essential fatty acids. Without all 90, the body cannot maintain optimal bone density.',
+      'The modern diet is a bone disaster: mineral-depleted soil means our food lacks the 60 minerals bones need, sugar and processed foods make the blood acidic (triggering calcium leaching), and processed foods block the absorption of what little nutrition remains. This is why Plant Derived Minerals — with up to 77 minerals from prehistoric plant deposits — combined with collagen-building nutrients and the full Mighty 90, are so critical for supporting bone health naturally.',
+    ],
+    recommendedProductCodes: [
+      PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
+      PRODUCT_CODES.PLANT_DERIVED_MINERALS,
+      PRODUCT_CODES.BASIC_MIGHTY_90,
+      PRODUCT_CODES.HEALTHY_BODY_DIGESTION_PAK_2_0,
     ],
   },
   {
@@ -446,6 +659,13 @@ function analyzeTranscript(transcript: string): HealthTopic {
     general: 0,
     skin_hair: 0,
     mood_mental: 0,
+    neuropathy: 0,
+    tinnitus: 0,
+    prostate: 0,
+    thyroid: 0,
+    kidney: 0,
+    chronic_pain: 0,
+    osteoporosis: 0,
   };
 
   for (const topicKeyword of TOPIC_KEYWORDS) {
