@@ -6,6 +6,7 @@ import { buildShareableUrl } from '../utils/shareLink';
 import { downloadStandaloneHtml } from '../utils/exportHtml';
 import ProductCard from './ProductCard';
 import YGYPopup from './YGYPopup';
+import FloatingContactWidget from './FloatingContactWidget';
 
 interface LandingPagePreviewProps {
   input: GeneratorInput;
@@ -14,10 +15,24 @@ interface LandingPagePreviewProps {
 }
 
 const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideToolbar = false }) => {
-  const [copy] = useState<GeneratedCopy>(() => generateCopy(input));
+  // Show the static, topic-templated copy immediately (no blank/loading flash),
+  // then swap in AI-personalized copy from Gemini once it resolves. Falls back
+  // silently to the static version if the AI call fails or isn't configured.
+  const [copy, setCopy] = useState<GeneratedCopy>(() => generateCopy(input));
   const [ygyPopupNavigate, setYgyPopupNavigate] = useState<((url: string) => void) | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    generateCopyWithAI(input).then((aiCopy) => {
+      if (!cancelled) setCopy(aiCopy);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input]);
 
   const handleYgyNavigate = useCallback((fn: (url: string) => void) => {
     setYgyPopupNavigate(() => fn);
@@ -219,6 +234,16 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
 
       {/* YGY Popup */}
       <YGYPopup ygyId={input.ygyId} onNavigate={handleYgyNavigate} />
+
+      {/* Floating lead-capture widget — visible to visitors on shared links too, so leads
+          can reach out directly, and the Netlify email notification includes the
+          distributor's ID/contact info so you know who to route the lead to. */}
+      <FloatingContactWidget
+        distributorYgyId={input.ygyId}
+        distributorName={input.contactName}
+        distributorPhone={input.contactPhone}
+        distributorEmail={input.contactEmail}
+      />
       </div>
     </>
   );

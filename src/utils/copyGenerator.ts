@@ -445,6 +445,73 @@ export function generateCopy(input: GeneratorInput): GeneratedCopy {
   };
 }
 
+interface AiCopyResponse {
+  headline: string;
+  subHeadline: string;
+  topicSectionTitle: string;
+  topicSectionBody: string[];
+  bodyStarvingBody: string[];
+  ctaTitle: string;
+  ctaBody: string;
+}
+
+/**
+ * Generates landing page copy personalized to this specific transcript via the
+ * `generate-copy` Netlify Function (Gemini). Falls back to the static,
+ * topic-templated copy from `generateCopy()` if the AI call fails or the
+ * GEMINI_API_KEY isn't configured, so the tool always produces a working page.
+ */
+export async function generateCopyWithAI(input: GeneratorInput): Promise<GeneratedCopy> {
+  const fallback = generateCopy(input);
+
+  try {
+    const topic = fallback.primaryTopic;
+    const topicData = TOPIC_KEYWORDS.find((t) => t.topic === topic);
+
+    const response = await fetch('/.netlify/functions/generate-copy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        transcript: input.transcript,
+        topic,
+        painPoint: topicData?.painPoint || '',
+        contactName: input.contactName,
+      }),
+    });
+
+    if (!response.ok) {
+      return fallback;
+    }
+
+    const ai = (await response.json()) as Partial<AiCopyResponse>;
+
+    if (
+      !ai.headline ||
+      !ai.subHeadline ||
+      !ai.topicSectionTitle ||
+      !Array.isArray(ai.topicSectionBody) ||
+      !Array.isArray(ai.bodyStarvingBody) ||
+      !ai.ctaTitle ||
+      !ai.ctaBody
+    ) {
+      return fallback;
+    }
+
+    return {
+      ...fallback,
+      headline: ai.headline,
+      subHeadline: ai.subHeadline,
+      topicSectionTitle: ai.topicSectionTitle,
+      topicSectionBody: ai.topicSectionBody,
+      bodyStarvingBody: ai.bodyStarvingBody,
+      ctaTitle: ai.ctaTitle,
+      ctaBody: ai.ctaBody,
+    };
+  } catch {
+    return fallback;
+  }
+}
+
 export function getFdaDisclaimer(): string {
   return FDA_DISCLAIMER;
 }

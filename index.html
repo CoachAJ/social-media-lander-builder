@@ -20,5 +20,23 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!--
+      Static (hidden) form so Netlify's build-time bot can detect and register
+      this form. The real form rendered by React (FloatingContactWidget.tsx)
+      submits to this same form name via fetch, so submissions still trigger
+      Netlify's email notifications even though this is a single-page app.
+    -->
+    <form name="lead-contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="text" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="text" name="distributorYgyId" />
+      <input type="text" name="distributorName" />
+      <input type="text" name="distributorPhone" />
+      <input type="text" name="distributorEmail" />
+      <input type="text" name="bot-field" />
+    </form>
   </body>
 </html>
