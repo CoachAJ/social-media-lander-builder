@@ -149,6 +149,7 @@ export const handler = async (event) => {
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
+  console.log('GEMINI_API_KEY present:', !!apiKey, 'length:', apiKey ? apiKey.length : 0);
   if (!apiKey) {
     return {
       statusCode: 501,
@@ -183,14 +184,24 @@ export const handler = async (event) => {
       }),
     });
 
+    console.log('Gemini response status:', response.status);
+
     if (!response.ok) {
       const errText = await response.text();
-      return { statusCode: 502, body: JSON.stringify({ error: 'Gemini API error', detail: errText }) };
+      console.log('Gemini error body:', errText.slice(0, 500));
+      try {
+        const errJson = JSON.parse(errText);
+        const message = errJson?.error?.message || errJson?.error?.status || errText;
+        return { statusCode: 502, body: JSON.stringify({ error: 'Gemini API error', detail: message }) };
+      } catch {
+        return { statusCode: 502, body: JSON.stringify({ error: 'Gemini API error', detail: errText }) };
+      }
     }
 
     const data = await response.json();
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!text) {
+      console.log('Gemini response had no text:', JSON.stringify(data).slice(0, 300));
       return { statusCode: 502, body: JSON.stringify({ error: 'Empty response from Gemini' }) };
     }
 
