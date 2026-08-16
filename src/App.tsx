@@ -5,9 +5,9 @@ import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import GeneratorForm from './components/GeneratorForm';
 import LandingPagePreview from './components/LandingPagePreview';
-import { GeneratorInput } from './types';
+import { GeneratorInput, GeneratedCopy } from './types';
 import { setSponsorId } from './utils/cartUtils';
-import { decodeParamToInput, buildShareableUrl } from './utils/shareLink';
+import { decodeSharedPage, buildShareableUrl } from './utils/shareLink';
 
 /**
  * Main App component - Landing Page Generator Tool
@@ -21,6 +21,12 @@ import { decodeParamToInput, buildShareableUrl } from './utils/shareLink';
 function App() {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [generatedInput, setGeneratedInput] = React.useState<GeneratorInput | null>(null);
+  // The frozen copy for the current page, if any. Set either by decoding a
+  // shared link that already froze it, or once the distributor's own AI
+  // generation resolves — at which point the URL is updated to embed it so
+  // every future visitor (and the distributor's own copied link) sees the
+  // exact same page instead of triggering a brand-new AI generation.
+  const [frozenCopy, setFrozenCopy] = React.useState<GeneratedCopy | undefined>(undefined);
   // True when the page was opened directly via a shared `?page=` link (i.e. an end
   // customer, not the distributor previewing inside the generator tool). Used to hide
   // internal tool branding/navigation and the copy-link/download-html toolbar.
@@ -31,10 +37,11 @@ function App() {
     const params = new URLSearchParams(window.location.search);
     const pageParam = params.get('page');
     if (pageParam) {
-      const decoded = decodeParamToInput(pageParam);
+      const decoded = decodeSharedPage(pageParam);
       if (decoded) {
-        setSponsorId(decoded.ygyId);
-        setGeneratedInput(decoded);
+        setSponsorId(decoded.input.ygyId);
+        setGeneratedInput(decoded.input);
+        setFrozenCopy(decoded.copy);
         setIsSharedView(true);
       }
     }
@@ -42,6 +49,7 @@ function App() {
 
   const handleGenerate = (input: GeneratorInput) => {
     setGeneratedInput(input);
+    setFrozenCopy(undefined);
     setIsSharedView(false);
     const shareUrl = buildShareableUrl(input);
     window.history.pushState({}, '', shareUrl);
@@ -50,8 +58,20 @@ function App() {
     }, 100);
   };
 
+  // Called once the AI (or fallback static) copy resolves for the distributor's
+  // own preview. Freezes it into the URL so the "Copy Shareable Link" button
+  // (and this exact browser tab, on reload) always replays the identical copy.
+  const handleCopyGenerated = (copy: GeneratedCopy) => {
+    setFrozenCopy(copy);
+    if (generatedInput) {
+      const shareUrl = buildShareableUrl(generatedInput, copy);
+      window.history.replaceState({}, '', shareUrl);
+    }
+  };
+
   const handleReset = () => {
     setGeneratedInput(null);
+    setFrozenCopy(undefined);
     setIsSharedView(false);
     window.history.pushState({}, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -69,7 +89,12 @@ function App() {
 
         <main role="main" className="flex-grow">
           {generatedInput ? (
-            <LandingPagePreview input={generatedInput} hideToolbar={isSharedView} />
+            <LandingPagePreview
+              input={generatedInput}
+              hideToolbar={isSharedView}
+              initialCopy={frozenCopy}
+              onCopyGenerated={handleCopyGenerated}
+            />
           ) : (
             <section className="py-16 md:py-20 bg-gradient-to-b from-gray-50 via-white to-white">
               <div className="container mx-auto px-4">
