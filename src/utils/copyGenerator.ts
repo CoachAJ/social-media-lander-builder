@@ -910,7 +910,8 @@ export async function generateCopyWithAI(input: GeneratorInput): Promise<{ copy:
 
     if (!response.ok) {
       const errData = await response.json().catch(() => ({}));
-      return { copy: fallback, error: `AI unavailable (${response.status}): ${errData?.error || response.statusText}. Using static copy.` };
+      const reason = errData?.detail || errData?.error || response.statusText || 'unknown';
+      return { copy: fallback, error: `AI unavailable (${response.status}): ${reason}. Using static copy.` };
     }
 
     const ai = (await response.json()) as Partial<AiCopyResponse>;
