@@ -12,20 +12,33 @@ interface LandingPagePreviewProps {
   input: GeneratorInput;
   /** Hides the internal Copy Link / Download HTML toolbar (used for visitors on a shared link). */
   hideToolbar?: boolean;
+  /** When set (opened via a shared link that already froze the copy), this exact
+   * copy is rendered immediately and the AI is never re-called for this visitor. */
+  initialCopy?: GeneratedCopy;
+  /** Called once the AI (or fallback static) copy resolves, so the parent can
+   * freeze it into the shareable URL for future visitors. Not called when
+   * `initialCopy` is provided, since the page is already frozen. */
+  onCopyGenerated?: (copy: GeneratedCopy) => void;
 }
 
-const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideToolbar = false }) => {
+const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideToolbar = false, initialCopy, onCopyGenerated }) => {
   // Show the static, topic-templated copy immediately (no blank/loading flash),
   // then swap in AI-personalized copy from Gemini once it resolves. Falls back
   // silently to the static version if the AI call fails or isn't configured.
-  const [copy, setCopy] = useState<GeneratedCopy>(() => generateCopy(input));
-  const [aiLoading, setAiLoading] = useState(true);
+  // If a frozen `initialCopy` was passed in (shared link), use it directly and
+  // skip the AI call entirely so every visitor sees the identical page.
+  const [copy, setCopy] = useState<GeneratedCopy>(() => initialCopy ?? generateCopy(input));
+  const [aiLoading, setAiLoading] = useState(!initialCopy);
   const [aiError, setAiError] = useState<string | null>(null);
   const [ygyPopupNavigate, setYgyPopupNavigate] = useState<((url: string) => void) | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (initialCopy) {
+      // Frozen shared-link copy — nothing to generate.
+      return;
+    }
     let cancelled = false;
     setAiLoading(true);
     setAiError(null);
@@ -34,6 +47,7 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
         setCopy(aiCopy);
         setAiLoading(false);
         if (error) setAiError(error);
+        else onCopyGenerated?.(aiCopy);
       }
     }).catch((err) => {
       if (!cancelled) {
@@ -58,7 +72,7 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
   };
 
   const handleCopyLink = async () => {
-    const url = buildShareableUrl(input);
+    const url = buildShareableUrl(input, copy);
     try {
       await navigator.clipboard.writeText(url);
     } catch {
