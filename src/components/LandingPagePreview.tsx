@@ -19,14 +19,21 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
   // then swap in AI-personalized copy from Gemini once it resolves. Falls back
   // silently to the static version if the AI call fails or isn't configured.
   const [copy, setCopy] = useState<GeneratedCopy>(() => generateCopy(input));
+  const [aiLoading, setAiLoading] = useState(true);
   const [ygyPopupNavigate, setYgyPopupNavigate] = useState<((url: string) => void) | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
+    setAiLoading(true);
     generateCopyWithAI(input).then((aiCopy) => {
-      if (!cancelled) setCopy(aiCopy);
+      if (!cancelled) {
+        setCopy(aiCopy);
+        setAiLoading(false);
+      }
+    }).catch(() => {
+      if (!cancelled) setAiLoading(false);
     });
     return () => {
       cancelled = true;
@@ -72,6 +79,13 @@ const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({ input, hideTool
 
   return (
     <>
+      {/* AI Loading Banner */}
+      {aiLoading && (
+        <div className="bg-health-blue text-white py-2 px-4 text-center text-sm font-montserrat animate-pulse">
+          AI is generating personalized copy from your transcript...
+        </div>
+      )}
+
       {/* Share / Export toolbar - internal use only, hidden for visitors on a shared link */}
       {!hideToolbar && (
         <div className="bg-white border-b border-gray-200 py-3 px-4">
