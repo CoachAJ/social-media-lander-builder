@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { PRODUCT_CODES, createCartUrl } from '../utils/cartUtils';
 
 // Product information type
@@ -22,51 +22,51 @@ export const PRODUCTS: Record<string, Product> = {
     id: PRODUCT_CODES.BASIC_MIGHTY_90,
     name: 'Basic Mighty 90',
     price: 70.95,
-    image: '/images/basic-mighty-90.png'
+    image: '/images/plant-derived-minerals.jpg'
   },
   [PRODUCT_CODES.HEALTHY_BODY_START_PAK_ORIGINAL]: {
     id: PRODUCT_CODES.HEALTHY_BODY_START_PAK_ORIGINAL,
-    name: 'Healthy Body Start Pak™ - Original',
+    name: 'Healthy Body Start Pakâ„¢ - Original',
     price: 142.95,
     image: '/images/healthy-body-pak-original.png'
   },
   [PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0]: {
     id: PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_0,
-    name: 'Healthy Body Start Pak™ 2.0',
+    name: 'Healthy Body Start Pakâ„¢ 2.0',
     price: 146.95,
     image: '/images/healthy-body-pak-2.0.png'
   },
   [PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_5]: {
     id: PRODUCT_CODES.HEALTHY_BODY_START_PAK_2_5,
-    name: 'Healthy Body Start Pak™ 2.5',
+    name: 'Healthy Body Start Pakâ„¢ 2.5',
     price: 146.95,
     image: '/images/healthy-body-pak-2.5.png'
   },
   // Targeted nutrition paks
   [PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0]: {
     id: PRODUCT_CODES.HEALTHY_BRAIN_AND_HEART_PAK_2_0,
-    name: 'Healthy Brain and Heart Pak™ 2.0',
+    name: 'Healthy Brain and Heart Pakâ„¢ 2.0',
     price: 219.95,
     image: '/images/healthy-body-pak-2.0.png'
   },
   [PRODUCT_CODES.HEALTHY_BODY_DIGESTION_PAK_2_0]: {
     id: PRODUCT_CODES.HEALTHY_BODY_DIGESTION_PAK_2_0,
-    name: 'Healthy Body Digestion Pak™ 2.0',
+    name: 'Healthy Body Digestion Pakâ„¢ 2.0',
     price: 202.95,
     image: '/images/healthy-body-pak-2.0.png'
   },
   [PRODUCT_CODES.HEALTHY_BLOOD_SUGAR_PAK_2_0]: {
     id: PRODUCT_CODES.HEALTHY_BLOOD_SUGAR_PAK_2_0,
-    name: 'Healthy Blood Sugar Pak™ 2.0',
+    name: 'Healthy Blood Sugar Pakâ„¢ 2.0',
     price: 173.95,
     image: '/images/healthy-body-pak-2.0.png'
   },
   // Individual products
   [PRODUCT_CODES.PLANT_DERIVED_MINERALS]: {
     id: PRODUCT_CODES.PLANT_DERIVED_MINERALS,
-    name: 'Plant Derived Minerals™',
+    name: 'Plant Derived Mineralsâ„¢',
     price: 23.95,
-    image: '/images/basic-mighty-90.png'
+    image: '/images/plant-derived-minerals.jpg'
   },
 };
 
