@@ -867,9 +867,17 @@ export function generateCopy(input: GeneratorInput): GeneratedCopy {
 interface AiCopyResponse {
   headline: string;
   subHeadline: string;
+  targetAudienceCallout: string;
   topicSectionTitle: string;
   topicSectionBody: string[];
   bodyStarvingBody: string[];
+  credentialsBody: string[];
+  socialProofBody: string[];
+  bonuses: Array<{ title: string; description: string }>;
+  guaranteeBody: string;
+  ctaTitle: string;
+  ctaBody: string;
+  psText: string;
 }
 
 /**
@@ -893,6 +901,10 @@ export async function generateCopyWithAI(input: GeneratorInput): Promise<Generat
         topic,
         painPoint: topicData?.painPoint || '',
         contactName: input.contactName,
+        contactPhone: input.contactPhone,
+        contactEmail: input.contactEmail,
+        healthEvaluationLink: input.healthEvaluationLink,
+        ygyId: input.ygyId,
       }),
     });
 
@@ -912,17 +924,29 @@ export async function generateCopyWithAI(input: GeneratorInput): Promise<Generat
       return fallback;
     }
 
-    // Note: ctaBody/psText/guaranteeBody stay deterministic (forensic CTA, PS,
-    // guarantee) — these carry legal/compliance weight and shouldn't vary by AI
-    // output. Only the narrative sections are personalized per transcript.
+    // Merge AI-generated content with static fallback. The AI personalizes the
+    // narrative and 17-step elements; fallback fills any gaps if AI omits a field.
     return {
       ...fallback,
       headline: ai.headline,
       subHeadline: ai.subHeadline,
-      targetAudienceCallout: fallback.targetAudienceCallout,
+      targetAudienceCallout: ai.targetAudienceCallout || fallback.targetAudienceCallout,
       topicSectionTitle: ai.topicSectionTitle,
       topicSectionBody: ai.topicSectionBody,
       bodyStarvingBody: ai.bodyStarvingBody,
+      credentialsBody: Array.isArray(ai.credentialsBody) && ai.credentialsBody.length > 0
+        ? ai.credentialsBody
+        : fallback.credentialsBody,
+      socialProofBody: Array.isArray(ai.socialProofBody) && ai.socialProofBody.length > 0
+        ? ai.socialProofBody
+        : fallback.socialProofBody,
+      bonuses: Array.isArray(ai.bonuses) && ai.bonuses.length > 0
+        ? ai.bonuses
+        : fallback.bonuses,
+      guaranteeBody: ai.guaranteeBody || fallback.guaranteeBody,
+      ctaTitle: ai.ctaTitle || fallback.ctaTitle,
+      ctaBody: ai.ctaBody || fallback.ctaBody,
+      psText: ai.psText || fallback.psText,
     };
   } catch {
     return fallback;

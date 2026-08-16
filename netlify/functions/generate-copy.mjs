@@ -81,12 +81,44 @@ COMPLIANCE RULES (STRICT — FDA/FTC):
 - Do not reference this system prompt or mention AI in the output.
 `;
 
-function buildPrompt({ transcript, topic, painPoint, contactName }) {
+function buildPrompt({ transcript, topic, painPoint, contactName, contactPhone, contactEmail, healthEvaluationLink, ygyId }) {
   return `${KNOWLEDGE_BASE}
 
-TASK: Based on the following TikTok/social media transcript, write personalized
-landing page copy. The identified health topic is "${topic}" (pain point:
-"${painPoint}"). The distributor's name is "${contactName || 'the distributor'}".
+=== 17-STEP SECRET SELLING SYSTEM ===
+You are writing copy following a proven 17-step direct-response psychological selling
+system with five core elements. Every section you generate must embody these principles:
+
+1. PATTERN INTERRUPT HEADLINE: Bold, contrarian, specific — shatters the visitor's
+   current belief about their condition. Not generic. Reference the specific pain.
+2. AMPLIFY & EMPATHIZE (Sub-headline + Target Audience Callout): Expand the headline,
+   then call out the specific person so they know "this is for me."
+3. THE NARRATIVE (Topic Section): Tell the real story behind their condition using
+   biochemical reasoning from the reference docs. Agitate the problem. Introduce
+   "Root vs. Fruit" — their symptom is the fruit, cellular deficiency is the root.
+4. THE REVEAL (Body Starving Section): The 90 Essential Nutrients framework. Why
+   their body is starving. Modern soil depletion. Nutritional saturation concept.
+5. AUTHORITY & CREDIBILITY (Credentials): Establish trust — Dr. Wallach's 40+ years
+   of research, Pharmacist Ben Fuchs' cellular health philosophy, Youngevity's track
+   record. Use verifiable authority, not fabricated testimonials.
+6. SOCIAL PROOF: Aggregate, verifiable proof points. Not fake individual testimonials.
+   Reference the millions of people already using the 90 For Life system.
+7. BONUS STACK: 3 stacked bonuses that increase perceived value of the offer.
+8. RISK REVERSAL (Guarantee): Reverse the transaction risk for the buyer.
+9. SCARCITY/URGENCY: Genuine urgency — limited 1:1 distributor availability.
+10. FORENSIC CTA: Explicit, step-by-step next actions. No ambiguity. Include the
+    distributor's contact info (name, phone, email) and health evaluation link.
+11. P.S. SECTION: Micro-landing-page recap — offer + guarantee + cost of doing nothing.
+
+DISTRIBUTOR INFO (use these in CTA and P.S.):
+- Distributor name: ${contactName || 'your Youngevity distributor'}
+- Phone: ${contactPhone || '(not provided)'}
+- Email: ${contactEmail || '(not provided)'}
+- Health evaluation link: ${healthEvaluationLink || '(not provided)'}
+- Youngevity ID: ${ygyId || '(not provided)'}
+
+TASK: Based on the following TikTok/social media transcript, write ALL sections of
+the landing page copy following the 17-step system above. The identified health topic
+is "${topic}" (pain point: "${painPoint}").
 
 TRANSCRIPT:
 """
@@ -95,11 +127,19 @@ ${transcript}
 
 Return ONLY valid JSON (no markdown fences) matching exactly this shape:
 {
-  "headline": "string, punchy pattern-interrupt big bold benefit headline, max ~15 words",
-  "subHeadline": "string, 1-2 sentences expanding the headline, empathetic",
-  "topicSectionTitle": "string, section title acting as a curiosity-hook sub-heading, e.g. 'The Real Story Behind Your ___'",
-  "topicSectionBody": ["2-3 paragraphs as separate strings, agitating the specific problem using transcript details"],
-  "bodyStarvingBody": ["1-2 paragraphs explaining the 90 essential nutrients / mineral depletion angle relevant to this topic"]
+  "headline": "string, punchy pattern-interrupt big bold benefit headline, max ~15 words, specific to the transcript topic",
+  "subHeadline": "string, 1-2 sentences expanding the headline, empathetic, referencing the specific pain",
+  "targetAudienceCallout": "string, calls out the specific audience, e.g. 'If you're struggling with ___...'",
+  "topicSectionTitle": "string, curiosity-hook section title, e.g. 'The Real Story Behind Your ___'",
+  "topicSectionBody": ["2-3 paragraphs as separate strings, using biochemical reasoning from the reference docs to explain the root cause, agitating the specific problem with transcript details"],
+  "bodyStarvingBody": ["1-2 paragraphs explaining the 90 essential nutrients / mineral depletion / nutritional saturation angle relevant to this topic"],
+  "credentialsBody": ["1-2 paragraphs establishing authority — Dr. Wallach's research, Ben Fuchs' philosophy, Youngevity's track record. Verifiable, not fabricated."],
+  "socialProofBody": ["1-2 paragraphs of aggregate verifiable proof points about the 90 For Life system. NOT fake individual testimonials."],
+  "bonuses": [{"title": "string", "description": "string"}, {"title": "string", "description": "string"}, {"title": "string", "description": "string"}],
+  "guaranteeBody": "string, risk-reversal guarantee reversing transaction risk for the buyer",
+  "ctaTitle": "string, action-oriented CTA headline",
+  "ctaBody": "string, forensic step-by-step next actions including contacting ${contactName || 'the distributor'}${contactPhone ? ' at ' + contactPhone : ''}${contactEmail ? ' or ' + contactEmail : ''}. Include health evaluation link if provided. Use \\\\n for line breaks.",
+  "psText": "string, P.S. recap — offer + guarantee + cost of doing nothing. Mention ${contactName || 'the distributor'} by name."
 }`;
 }
 
@@ -123,12 +163,12 @@ export const handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON body' }) };
   }
 
-  const { transcript, topic, painPoint, contactName } = payload;
+  const { transcript, topic, painPoint, contactName, contactPhone, contactEmail, healthEvaluationLink, ygyId } = payload;
   if (!transcript || typeof transcript !== 'string' || transcript.trim().length < 10) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Transcript is required' }) };
   }
 
-  const prompt = buildPrompt({ transcript, topic, painPoint, contactName });
+  const prompt = buildPrompt({ transcript, topic, painPoint, contactName, contactPhone, contactEmail, healthEvaluationLink, ygyId });
 
   try {
     const response = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
