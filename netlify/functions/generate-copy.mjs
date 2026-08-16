@@ -13,7 +13,7 @@ import { readFileSync } from 'node:fs';
 // undefined. Use the CJS __dirname when it exists; otherwise fall back to ESM.
 const functionDir = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
 
-const GEMINI_MODEL = 'gemini-2.0-flash';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 // Load the two reference documents at cold-start so they're available for every
