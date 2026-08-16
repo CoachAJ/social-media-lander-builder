@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { PRODUCT_CODES, createCartUrl } from '../utils/cartUtils';
 
 // Product information type
@@ -22,7 +22,7 @@ export const PRODUCTS: Record<string, Product> = {
     id: PRODUCT_CODES.BASIC_MIGHTY_90,
     name: 'Basic Mighty 90',
     price: 70.95,
-    image: '/images/plant-derived-minerals.jpg'
+    image: '/images/basic-mighty-90.png'
   },
   [PRODUCT_CODES.HEALTHY_BODY_START_PAK_ORIGINAL]: {
     id: PRODUCT_CODES.HEALTHY_BODY_START_PAK_ORIGINAL,
